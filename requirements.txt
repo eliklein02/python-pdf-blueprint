@@ -1,6 +1,6 @@
 PyPDF2
-selenium
-webdriver_manager
+selenium==4.21.0
+webdriver-manager==4.0.2
 google-api-core
 google-api-python-client
 google-auth
