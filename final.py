@@ -10,6 +10,7 @@ import concurrent.futures
 from datetime import datetime
 import os
 import io
+import shutil
 
 
 # from selenium import webdriver
@@ -171,13 +172,21 @@ def extract_googleapis_link(url):
     # caps['goog:loggingPrefs'] = {'performance': 'ALL'}
     # options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
     # driver = webdriver.Chrome(options=options, service=service)
+    chrome_path = shutil.which('chromedriver')
+
+    if chrome_path is None:
+        raise Exception("Chromedriver not found")
+    
+    service = Service(executable_path=chrome_path)
     options = Options()
     options.add_argument("--disable-gpu")
     options.add_argument("--headless")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--no-sandbox")
     caps = DesiredCapabilities.CHROME
     caps['goog:loggingPrefs'] = {'performance': 'ALL'}
     options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()), options=options)
+    driver = webdriver.Chrome(service=service, options=options)
     print(driver)
     try:
         payload = {}
@@ -331,3 +340,32 @@ if uploaded is not None:
             st.write("Error:")
             st.write(e)
             st.write("Please try again.")
+
+
+
+# from selenium import webdriver
+# from selenium.webdriver.chrome.service import Service
+# from selenium.webdriver.chrome.options import Options
+# import shutil
+
+# def setup_driver():
+#     options = Options()
+#     options.add_argument("--headless")  # Run in headless mode (no GUI)
+#     options.add_argument("--no-sandbox")
+#     options.add_argument("--disable-dev-shm-usage")
+
+#     #Find chromedriver location.
+#     chrome_path = shutil.which('chromedriver')
+
+#     if chrome_path is None:
+#         raise Exception("Chromedriver not found")
+
+#     service = Service(executable_path=chrome_path)
+
+#     driver = webdriver.Chrome(service=service, options=options)
+#     return driver
+
+# driver = setup_driver()
+# # ... your Selenium code ...
+# driver.quit()
+
