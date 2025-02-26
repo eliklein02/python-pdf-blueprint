@@ -13,15 +13,7 @@ import io
 import shutil
 
 
-# from selenium import webdriver
-# from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-# # from webdriver_manager.chrome import ChromeDriverManager
-# from selenium import webdriver
-# from selenium.webdriver.chrome.options import Options
-# from selenium.webdriver.chrome.service import Service
-# from webdriver_manager.chrome import ChromeDriverManager
-# from webdriver_manager.core.os_manager import ChromeType
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
@@ -123,7 +115,7 @@ def pdf_iter(file):
 
     os.remove("./output.pdf")
         
-def rate_limited(array, folder, limit=5):
+def rate_limited(array, folder, limit=2):
     to_return = []
     count = 0
     chunks = array[count:count + limit]
@@ -137,7 +129,6 @@ def rate_limited(array, folder, limit=5):
 
 def process_annotation_wrapper(args):
     a, folder = args
-    # print(f"Processing annotation: {a}, folder: {folder}")
     return process_annotation(a, folder)
 
 
@@ -167,25 +158,6 @@ def process_annotation(a, folder):
 
 def extract_googleapis_link(url):
     print("initiating driver")
-    # options = webdriver.ChromeOptions()
-    # options.add_argument("--headless")
-    # # service = Service(ChromeDriverManager().install())
-    # service=Service("./chromedriver")
-    # caps = DesiredCapabilities.CHROME
-    # caps['goog:loggingPrefs'] = {'performance': 'ALL'}
-    # options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
-    # driver = webdriver.Chrome(options=options, service=service)
-    # chrome_path = shutil.which('chromedriver')
-
-    # if chrome_path is None:
-    #     raise Exception("Chromedriver not found")
-    
-    # service = Service(executable_path="./chromedriver")
-    # options = Options()
-    # options.add_argument("--disable-gpu")
-    # options.add_argument("--headless")
-    # options.add_argument("--disable-dev-shm-usage")
-    # options.add_argument("--no-sandbox")
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
     options.add_argument('--disable-gpu')
@@ -193,8 +165,7 @@ def extract_googleapis_link(url):
     caps = DesiredCapabilities.CHROME
     caps['goog:loggingPrefs'] = {'performance': 'ALL'}
     options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager(driver_version="133.0.6943.141").install()),options=options)
-    # driver = webdriver.Chrome(service=service, options=options)
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),options=options)
     print(driver)
     try:
         payload = {}
