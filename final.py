@@ -190,10 +190,10 @@ def extract_googleapis_link(url):
     options.add_argument('--headless')
     options.add_argument('--disable-gpu')
     options.add_argument('--window-size=1920,1200')
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),options=options)
     caps = DesiredCapabilities.CHROME
     caps['goog:loggingPrefs'] = {'performance': 'ALL'}
     options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),options=options)
     # driver = webdriver.Chrome(service=service, options=options)
     print(driver)
     try:
