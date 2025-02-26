@@ -12,10 +12,15 @@ import os
 import io
 
 
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
+# from selenium import webdriver
+# from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+# from webdriver_manager.chrome import ChromeDriverManager
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.core.os_manager import ChromeType
 
 from urllib.parse import quote
 from urllib.parse import urlparse
@@ -155,14 +160,21 @@ def process_annotation(a, folder):
     return [page, rect, name]
 
 def extract_googleapis_link(url):
-    options = webdriver.ChromeOptions()
-    options.add_argument("--headless")
-    service = Service(ChromeDriverManager().install())
+    # options = webdriver.ChromeOptions()
+    # options.add_argument("--headless")
+    # # service = Service(ChromeDriverManager().install())
     # service=Service("./chromedriver")
+    # caps = DesiredCapabilities.CHROME
+    # caps['goog:loggingPrefs'] = {'performance': 'ALL'}
+    # options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
+    # driver = webdriver.Chrome(options=options, service=service)
+    options = Options()
+    options.add_argument("--disable-gpu")
+    options.add_argument("--headless")
     caps = DesiredCapabilities.CHROME
     caps['goog:loggingPrefs'] = {'performance': 'ALL'}
     options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
-    driver = webdriver.Chrome(options=options, service=service)
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()), options=options)
     try:
         payload = {}
         count = 0
