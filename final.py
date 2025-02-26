@@ -155,8 +155,8 @@ def process_annotation(a, folder):
 def extract_googleapis_link(url):
     options = webdriver.ChromeOptions()
     options.add_argument("--headless")
-    # service = Service(ChromeDriverManager().install())
-    service=Service("./chromedriver")
+    service = Service(ChromeDriverManager().install())
+    # service=Service("./chromedriver")
     caps = DesiredCapabilities.CHROME
     caps['goog:loggingPrefs'] = {'performance': 'ALL'}
     options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
