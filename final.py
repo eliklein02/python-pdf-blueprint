@@ -118,6 +118,7 @@ def rate_limited(array, folder, limit=5):
     to_return = []
     count = 0
     chunks = array[count:count + limit]
+    print(f"Chunks: {chunks}")
     for i in range(0, len(array), limit):
         chunks = array[i:i + limit]
         with concurrent.futures.ProcessPoolExecutor() as e:
