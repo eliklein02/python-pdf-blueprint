@@ -128,6 +128,7 @@ def rate_limited(array, folder, limit=5):
 
 def process_annotation_wrapper(args):
     a, folder = args
+    print(f"Processing annotation: {a}, folder: {folder}")
     return process_annotation(a, folder)
 
 
