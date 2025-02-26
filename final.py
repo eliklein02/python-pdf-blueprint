@@ -133,7 +133,7 @@ def rate_limited(array, folder, limit=5):
 
 def process_annotation_wrapper(args):
     a, folder = args
-    print(f"Processing annotation: {a}, folder: {folder}")
+    # print(f"Processing annotation: {a}, folder: {folder}")
     return process_annotation(a, folder)
 
 
@@ -147,6 +147,8 @@ def process_annotation(a, folder):
         rect = a['rect']
         page = a['page']
     payload = extract_googleapis_link(link)
+    print(payload)
+    print("payload")
     try:
         url = payload['url'][0]
         name = payload['name']
@@ -160,6 +162,7 @@ def process_annotation(a, folder):
     return [page, rect, name]
 
 def extract_googleapis_link(url):
+    print("initiating driver")
     # options = webdriver.ChromeOptions()
     # options.add_argument("--headless")
     # # service = Service(ChromeDriverManager().install())
@@ -175,6 +178,7 @@ def extract_googleapis_link(url):
     caps['goog:loggingPrefs'] = {'performance': 'ALL'}
     options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
     driver = webdriver.Chrome(service=Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()), options=options)
+    print(driver)
     try:
         payload = {}
         count = 0
