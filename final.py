@@ -165,7 +165,8 @@ def extract_googleapis_link(url):
     caps = DesiredCapabilities.CHROME
     caps['goog:loggingPrefs'] = {'performance': 'ALL'}
     options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
-    driver = webdriver.Chrome(service=Service("./chromedriver_linux"),options=options)
+    service = Service(executable_path='./chromedriver_linux')
+    driver = webdriver.Chrome(service=service, options=options)
     print(driver)
     try:
         payload = {}
