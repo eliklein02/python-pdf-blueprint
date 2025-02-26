@@ -177,7 +177,7 @@ def extract_googleapis_link(url):
     if chrome_path is None:
         raise Exception("Chromedriver not found")
     
-    service = Service(executable_path=chrome_path)
+    service = Service(executable_path="./chromedriver")
     options = Options()
     options.add_argument("--disable-gpu")
     options.add_argument("--headless")
