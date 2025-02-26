@@ -172,10 +172,10 @@ def extract_googleapis_link(url):
     # caps['goog:loggingPrefs'] = {'performance': 'ALL'}
     # options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
     # driver = webdriver.Chrome(options=options, service=service)
-    chrome_path = shutil.which('chromedriver')
+    # chrome_path = shutil.which('chromedriver')
 
-    if chrome_path is None:
-        raise Exception("Chromedriver not found")
+    # if chrome_path is None:
+    #     raise Exception("Chromedriver not found")
     
     service = Service(executable_path="./chromedriver")
     options = Options()
