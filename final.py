@@ -115,7 +115,7 @@ def pdf_iter(file):
 
     os.remove("./output.pdf")
         
-def rate_limited(array, folder, limit=2):
+def rate_limited(array, folder, limit=1):
     to_return = []
     count = 0
     chunks = array[count:count + limit]
