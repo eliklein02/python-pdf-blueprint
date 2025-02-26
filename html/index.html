@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      8 Malka way | 8 Malka way - First floor | 2019-02-10 09:57:44 -0800
+    </title>
+    <meta
+      name="description"
+      content="Display a single-resolution cubemap image."
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui"
+    />
+    <link rel="stylesheet" href="../required_assets/reset.css" />
+    <link rel="stylesheet" href="../required_assets/style.css" />
+  </head>
+  <body>
+    <div id="pano"></div>
+    <input type="file" id="fileInput" accept="image/*" />
+    <script src="../required_assets/es5-shim.js"></script>
+    <script src="../required_assets/eventShim.js"></script>
+    <script src="../required_assets/requestAnimationFrame.js"></script>
+    <script src="../required_assets/marzipano.js"></script>
+    <script>
+      //   document
+      //     .getElementById("fileInput")
+      //     .addEventListener("change", function (event) {
+      //       const file = event.target.files[0];
+      //       if (file) {
+      //         const reader = new FileReader();
+      //         reader.onloadend = () => {
+      //           const img_data = reader.result;
+      //           initializeMarzipano(img_data);
+      //         };
+      //         reader.readAsDataURL(file);
+      //       }
+      //     });
+
+      const params = new URLSearchParams(window.location.search);
+      let image_name = params.get("image");
+      let image_path = "../" + image_name;
+
+      let img_data = null;
+
+      fetch(image_path)
+        .then((response) => response.blob())
+        .then((blob) => {
+          const file = new File([blob], image_name, { type: blob.type });
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            img_data = reader.result;
+            console.log(img_data);
+            initializeMarzipano(img_data);
+          };
+          reader.readAsDataURL(file);
+        })
+        .catch((error) => console.error("Error fetching the image:", error));
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        img_data = reader.result;
+        console.log(img_data);
+        initializeMarzipano(img_data);
+      };
+      reader.readAsDataURL(file);
+
+      function initializeMarzipano(img_data) {
+        var viewer = new Marzipano.Viewer(document.getElementById("pano"));
+
+        var geometry = new Marzipano.EquirectGeometry([{ width: 4000 }]);
+
+        var source = Marzipano.ImageUrlSource.fromString(img_data);
+
+        var scene = viewer.createScene({
+          geometry: geometry,
+          source: source,
+          view: new Marzipano.RectilinearView(
+            { yaw: 0, fov: Math.PI * 2 },
+            Marzipano.RectilinearView.limit.traditional(
+              8192,
+              (140 * Math.PI) / 180
+            )
+          ),
+          pinFirstLevel: true,
+        });
+
+        scene.switchTo();
+      }
+    </script>
+  </body>
+</html>
